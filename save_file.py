@@ -13,7 +13,8 @@ import codecs, sys
 sys.stdout = codecs.getwriter('utf8')(sys.stdout.buffer)
 #json
 import json
-
+from urllib.request import quote,unquote
+import chardet
 #-----------------程序处理-----------------
 #-----------------功能:上传文件-----------------
 
@@ -35,17 +36,35 @@ if id and (id in UserDataBase.keys()):
     if UserDataBase[id] == password:
         status=1
 
-
+print ("""Content-Type:text/html""")
+print()
 #非法用户则不做文件处理
 if status:
     #检测文件是否上传
     if fileitem.filename:
         #设置文件路径
         fn=os.path.basename(fileitem.filename.replace("\\","/"))
-        if os.path.isfile(fn):
-            pass
+        dot_set=-1
+        for index in range(len(fn)):
+            if fn[index]=='.':
+                dot_set=index
+        file_type=""
+        file_type+=fn[dot_set+1:]
+
+        #在img_json中获得文件序列值
+        img_set={"counter":0}
+        with open("../html/DataBase/"+id+"/"+"img/img_json.kdb","r") as fp:
+            img_set=json.load(fp)
+        #print(img_set["counter"])
+        counter=str(img_set["counter"]+1)
+        img_set["counter"]=img_set["counter"]+1
+        #print(counter)
+        with open("../html/DataBase/"+id+"/"+"img/img_json.kdb","w") as fp:
+            json.dump(img_set,fp)
+        if file_type in ["png","PNG","jpeg","mp4","jpg","JPG","JPEG"]:              
+            open('/var/www/html/DataBase/'+id+"/img/"+str(counter)+"."+file_type,'wb').write(fileitem.file.read())
         else:
-            open('/var/www/html/temp/'+fn,'wb').write(fileitem.file.read())
+            status=False
         message='su"'+fn+'"su'
     else:
         message='no'
@@ -53,8 +72,7 @@ if status:
 
 #HTML渲染
 
-print ("""Content-Type:text/html""")
-print()
+
 print("""
         <html>
         <head>
@@ -66,7 +84,7 @@ print("""
 if status:
     print(f"<p>成功上传文件</p>")
 else:
-    print(f"<p>警告:非相关人员请远离</p>")
+    print(f"<p>账号密码错误，或者文件格式不允许，仅支持上传,png,PNG,jpeg,mp4,jpg,JPG,JPEG格式文件</p>")
 
 print("""
            </body>

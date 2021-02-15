@@ -66,38 +66,42 @@ if status:
     <html>
     <head>
         <meta charset="utf-8">
-            <title>Python CGI</title>
-        <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IMage Share文件上传</title>
+    </head>
     <style>
     </style>
     
     <body>
-        <h1 style="color:red;">Code To Long</h1>
     """)
-    print(f"<h2>上传文件</h2>")
+    
 
-
-    """
-    print("读取cookie信息")
-    if 'HTTP_COOKIE' in os.environ:
-        cookie_string=os.environ.get('HTTP_COOKIE')
-        c=http.cookies.SimpleCookie()
-        c.load(cookie_string)
-        try:
-            data=c['name'].value
-            print("cookie data: "+data+"<br>")
-        except KeyError:
-            print("cookie 没有设置或者已过去<br>")
-    """
 
     #文件上传实例
     print("""
+    <div style="width:100%;height:100%;background-color:#fafafa;display:flex;justify-content:center;align-items:center;flex-wrap:wrap;">
+    <h1 style="color:rgb(79,192,141);">IMageShare</h1>
     <form enctype="multipart/form-data" action="/cgi-bin/save_file.py" method="post">
-    <p>选中文件:<input type="file" name="filename" /></p>
-    <p>账号:<input id="id" type="text" name="id" /></p>
-    <p>密码:<input id="password" type="password" name="password" /></p>
-    <p><input type="submit" value="上传" /></p>
+    <p>
+        <span style="color:rgb(230,99,99);font-weight:bold;">选中文件:</span>
+        <input type="file" name="filename" />
+    </p>
+    <p>
+        <span style="color:orange;">账号:</span>
+        <input id="id" type="text" name="id" />
+    </p>
+    <p>
+        <span style="color:orange;">密码:</span>
+        <input id="password" type="password" name="password" />
+    </p>
+    <p>
+        <input style="
+        width:80px;height:30px;background-color:rgba(180,40,40,0.8);
+        border-radius:40px;color:#ffffff;border:0px;outline:none;
+        " type="submit" value="上传" />
+    </p>
     <form>
+    </div>
     """)
 
 
@@ -119,5 +123,16 @@ if status:
     </html>
     """)
 else:
-    print("警告:非相关人员请远离")
+    print("""
+    <div style="
+        width:100%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background-color:#fafafa;"
+    >
+        <span style="color:rgb(79,192,141);font-size:60px;">HELLO,PLEASE TRY ONCE</span>
+    </div>
+    """)
 
