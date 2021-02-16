@@ -47,7 +47,7 @@ print("</tr>")
 for key,val in UserSet.items():
     print("<tr>")
     print(f'<td style="color:red;">{key}</td>')
-    print(f'<td style="color:blue;">{val}</td>')
+    print(f'<td style="color:blue;">******</td>')
     print("</tr>")
 print('</table>')
 
