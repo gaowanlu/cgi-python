@@ -16,8 +16,11 @@ import json
 import requests
 
 #-----------------程序处理-----------------
+#bing每日壁纸API
 url="https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN"
+#发起get请求
 res=requests.get(url)
+#发送json信息
 print("Content-Type:text")
 print()
 print(res.text)

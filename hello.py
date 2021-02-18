@@ -23,9 +23,7 @@ import json
 #cookie常用在身份校验中
 #cookie传递早于文件传递
 #cookie格式 Set-cookie:name=name;expires=date;path=path;domain=domain;secure
-print("Content-Type:text/html")
-#print('Set-Cookie: name="菜鸟教程";expires=Wed, 28 Aug 2016 18:30:00 GMT')
-print() #空行，告诉服务器结束头部
+
 
 # HTTP头部
 """
@@ -59,8 +57,21 @@ if site_name and (site_name in UserDataBase.keys()):
     if UserDataBase[site_name] == site_url:
         status=1
 
+def create_cookie(id,password):
+    password_length=len(password)
+    cookie=""
+    for ch in password:
+        if (ord(ch)-22>0):
+            cookie+=chr(ord(ch)-7)
+    for ch in id:
+        if (ord(ch)-22>0):
+            cookie+=chr(ord(ch)-2)
+    return cookie
 
 if status:
+    print("Content-Type:text/html")
+    print(f'Set-Cookie:{site_name}="{create_cookie(site_name,site_url)}";path="/cgi-bin/";expires="Wed, 28 Aug 2022 18:30:00 GMT";')
+    print() #空行，告诉服务器结束头部
     # HTML渲染
     print("""
     <html>
@@ -123,6 +134,22 @@ if status:
     </html>
     """)
 else:
+    print("Content-Type:text/html")
+    print('Set-Cookie:name="119.3.180.71-123";expires="Wed, 28 Aug 2022 18:30:00 GMT"; ')
+    print() #空行，告诉服务器结束头部
+    # HTML渲染
+    print("""
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>IMage Share文件上传</title>
+    </head>
+    <style>
+    </style>
+    
+    <body>
+    """)
     print("""
     <div style="
         width:100%;
@@ -134,5 +161,7 @@ else:
     >
         <span style="color:rgb(79,192,141);font-size:60px;">HELLO,PLEASE TRY ONCE</span>
     </div>
+    </body>
+    </html>
     """)
 
