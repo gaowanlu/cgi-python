@@ -29,35 +29,36 @@ print()
 post_json={"textarea":text,"username":"123","imgindex":[]}
 
 #保存图片文件(sum张图片)
-"""
+
 for i in range(9):
     name="img"+str(i)
-    if form[name]:
+    print(i)
+    if form[name].filename:
         print("yes")
     else:
-        print("no")
-"""
-    #with open("/var/www/html/DataBase/"+"123"+"/"+"img/img_json.kdb","r") as fp:
-    #    img_set=json.load(fp)
-    #counter=str(img_set["counter"]+1)
-    #img_set["counter"]=img_set["counter"]+1
-    #with open("/var/www/html/DataBase/"+"123"+"/"+"img/img_json.kdb","w") as fp:
-    #    json.dump(img_set,fp)
+        continue
+    fileitem=form[name]
+    with open("/var/www/html/DataBase/"+"123"+"/"+"img/img_json.kdb","r") as fp:
+        img_set=json.load(fp)
+    counter=str(img_set["counter"]+1)
+    img_set["counter"]=img_set["counter"]+1
+    with open("/var/www/html/DataBase/"+"123"+"/"+"img/img_json.kdb","w") as fp:
+        json.dump(img_set,fp)
     #设置文件路径
-    #fn=os.path.basename(fileitem.filename.replace("\\","/"))
-    #dot_set=-1
-    #for index in range(len(fn)):
-    #    if fn[index]=='.':
-    #        dot_set=index
-    #file_type=""
-    #file_type+=fn[dot_set+1:]
-    #print(file_type)
-    #open('/var/www/html/DataBase/'+"123"+"/img/"+str(i)+"."+"temp",'wb').write(fileitem.file.read())
-    #post_json["imgindex"].append(str(counter)+"."+file_type)
+    fn=os.path.basename(fileitem.filename.replace("\\","/"))
+    dot_set=-1
+    for index in range(len(fn)):
+        if fn[index]=='.':
+            dot_set=index
+    file_type=""
+    file_type+=fn[dot_set+1:]
+    print(file_type)
+    open('/var/www/html/DataBase/'+"123"+"/img/"+str(counter)+"."+file_type,'wb').write(fileitem.file.read())
+    post_json["imgindex"].append(str(counter)+"."+file_type)
 
 
 #读取post_json
-"""
+
 with open("/var/www/html/DataBase/"+"123"+"/"+"post/post_json.kdb","r") as fp:
     post_set=json.load(fp)
 counter=str(post_set["counter"])
@@ -68,7 +69,7 @@ with open("/var/www/html/DataBase/"+"123"+"/"+"post/post_json.kdb","w") as fp:
 #存储json
 with open("/var/www/html/DataBase/"+"123"+"/"+"post/"+counter+".post","w") as fp:
     json.dump(post_json,fp)
-"""
+
 
 print(text)
 
